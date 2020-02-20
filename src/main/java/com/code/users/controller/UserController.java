@@ -47,7 +47,6 @@ public class UserController {
     @Autowired
     private RestTemplate restTemplate;
 
-//    public UserController(){}
     public UserController(UserServices userServices) {
         this.userServices = userServices;
     }
@@ -59,34 +58,35 @@ public class UserController {
     }
 
     @RequestMapping(path = "/users/username/{codewarsusername}", produces = "application/json", method = RequestMethod.GET)
-    public Object getByUsername(@PathVariable String codewarsusername ){
+    public Object fagetByUsername(@PathVariable String codewarsusername ){
 
         List<Object> list = Collections.singletonList(userServices.getUser(codewarsusername));
 
         List<Object> userOutput = new ArrayList<>();
 
         for (Object user : list){
-
             String url = "https://www.codewars.com/api/v1/users/" + codewarsusername;
             Object user1 = restTemplate.getForObject(url, Object.class);
-            System.out.println(user1);
 
             userOutput.add(user1);
         }
+
+        userOutput.forEach(System.out::println);
 
         return userOutput;
     }
 
     //find user by Id
     @RequestMapping(path = "/users/{userId}", produces = "application/json", method = RequestMethod.GET)
-    public User getById(
+    public Optional<User> getById(
             @PathVariable Long userId){
         return userServices.findById(userId);
     }
 
     @RequestMapping(path = "/users/add", produces = "application/json", method = RequestMethod.POST)
     public void addUser(@RequestBody User user){
-        userServices.addUser(user);
+
+        userServices.add(user);
     }
 
     @RequestMapping(path = "/users/{id}", produces = "application/json", method = RequestMethod.DELETE)

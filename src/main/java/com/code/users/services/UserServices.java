@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
 
 @Service
 public class UserServices{
@@ -30,13 +30,16 @@ public class UserServices{
     //define an method to get all users in the database
     public List<User> getAllUsers(){
 
-        return new ArrayList<>(userRepository.findAll());
+        return userRepository.findAll();
 
     }
 
     //find user by Id
-    public User findById(Long id){
-        return userRepository.findById(id).orElse(null);
+    public Optional<User> findById(Long id){
+        //        return userRepository.findById(id).orElse(null);
+
+
+        return userRepository.findById(id);
     }
 
     //Delete user by id
@@ -51,11 +54,12 @@ public class UserServices{
 
     public List<User> getUser(String codewarsusername){
 
+        List<User> users = userRepository.findByCodewarsusername(codewarsusername);
         return userRepository.findByCodewarsusername(codewarsusername);
     }
 
     //add users
-    public void addUser(User user){
-        userRepository.save(user);
+    public void add(User user){
+       userRepository.save(user);
     }
 }

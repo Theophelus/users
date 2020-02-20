@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String fullname;
     private String codewarsusername;
@@ -35,11 +35,11 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
+    public String getFullname() {
         return fullname;
     }
 
-    public void setName(String fullname) {
+    public void Fullname(String fullname) {
         this.fullname = fullname;
     }
 
